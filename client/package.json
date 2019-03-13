@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "chart.js": "^2.7.3",
     "react": "^16.8.4",
+    "react-chartkick": "^0.3.0",
     "react-charts-d3": "^2.4.1",
     "react-dom": "^16.8.4",
     "react-scripts": "2.1.8",

@@ -25,19 +25,19 @@ export const genreFinder = (obj) => {
     }
     dic[distinctGenres[i]] = n
   }
-  // for (let key in dic) {
-  //   if (dic[key] === 1) {
-  //     delete dic[key]
-  //   }
-  // }
+  for (let key in dic) {
+    if (dic[key] === 1) {
+      delete dic[key]
+    }
+  }
   let keys = Object.keys(dic)
   let values = Object.values(dic)
   const genres = []
   for (let i = 0; i < keys.length; i++) {
-    genres.push({ label: keys[i], value: values[i] })
+    genres.push([keys[i], values[i]])
   }
 
-  return genres
+  return genres.sort((a, b) => a[1] - b[1]).reverse()
 }
 
 
