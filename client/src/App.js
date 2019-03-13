@@ -4,6 +4,7 @@ import './App.css';
 import SpotifyWebApi from 'spotify-web-api-js';
 import { Artists } from './components/Artists'
 import { PieCharts } from './components/PieCharts'
+import { BarChart } from './components/BarChart'
 
 const spotifyApi = new SpotifyWebApi()
 
@@ -18,8 +19,7 @@ class App extends Component {
     this.state = {
       loggedIn: token ? true : false,
       nowPlaying: { name: 'Not Checked', albumArt: '' },
-      topArtists: [],
-      messyObj: {}
+      topArtists: []
     }
 
   }
@@ -66,31 +66,48 @@ class App extends Component {
       .then((response) => {
         console.log('response.items', response.items)
         this.setState({
-          topArtists: response.items,
-          messyObj: response
+          topArtists: response.items
         });
       })
   }
   render() {
     return (
       <div className="App">
-        <a href='http://localhost:8888' > Login to Spotify </a>
-        <div>
+        <div className='header'>
+          <a href='http://localhost:8888' > Login to Spotify </a>
+
+          {/* <div>
           Now Playing: {this.state.nowPlaying.name}
-        </div>
-        <div>
-          <img src={this.state.nowPlaying.albumArt} style={{ height: 150 }} />
-        </div>
-        {this.state.loggedIn &&
-          <div>
-            <button onClick={() => this.getNowPlaying()}>
-              Check Now Playing
-        </button>
-            <button onClick={() => this.getTopArtists()}>
-              get top artists
-     </button>
           </div>
-        }
+          <div>
+          <img src={this.state.nowPlaying.albumArt} style={{ height: 150 }} />
+        </div> */}
+          {/* {this.state.loggedIn &&
+          <div>
+          <button onClick={() => this.getNowPlaying()}>
+          Check Now Playing
+          </button>
+          
+          </div>
+        } */}
+          {this.state.loggedIn &&
+            <div>
+
+              <button onClick={() => this.getTopArtists()}>
+                get top artists
+              </button>
+            </div>
+          }
+        </div>
+        <div className='discBand'>
+          <span>this is the discBand</span>
+          {/* <Disc> */}
+        </div>
+        <div className="meatAndPotatoes">
+          <span>This is the Meat and Potatoes</span>
+
+        </div>
+
         {this.state.topArtists.length > 0 &&
           <Artists artists={this.state.topArtists} />
 
@@ -99,6 +116,11 @@ class App extends Component {
           <PieCharts artists={this.state.topArtists} />
 
         }
+        {this.state.topArtists.length > 0 &&
+          <BarChart artists={this.state.topArtists} />
+
+        }
+        <div className="footer">This is the Footer</div>
       </div>
     )
   }
