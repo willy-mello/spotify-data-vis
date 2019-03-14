@@ -1,6 +1,5 @@
 export const genreFinder = (obj) => {
   let allTracks = obj
-
   let justGenres = allTracks.map((elem) => {
     return elem.genres
   })
@@ -44,9 +43,7 @@ export const genreFinder = (obj) => {
 //and return a string of comma deliniated idnumbers
 export const stringifyIds = (arr) => {
   const arrayOfIds = arr.map((elem) => elem.id).join(',');
-  console.log("arrofIds", arrayOfIds)
   return arrayOfIds
-
 }
 
 
@@ -54,7 +51,7 @@ export const stringifyIds = (arr) => {
 //for discs, need to reduce the whole song data arrayofObjs into an array
 //of agregate scores ie.= [["loudness",45],["energy",65],['danceability',24],["liveness",20],["instrumetal",44],["speechiness",35]]
 export const reduceTopTracksData = (arr) => {
-  console.log(arr, 'array')
+
   const dic = {
     loudness: [],
     energy: [],
@@ -73,30 +70,50 @@ export const reduceTopTracksData = (arr) => {
       }
     }
   })
-  console.log('dictionar before reduce', dic)
+
   for (let key in dic) {
     let total = dic[key].reduce((acc, cur) => acc + cur) * 100
     dic[key] = Math.round(total / arr.length)
 
   }
-  console.log('dictionary in reduce top tracks after reduce', dic)
+
 
   let keys = Object.keys(dic)
   let values = Object.values(dic)
   for (let i = 0; i < keys.length; i++) {
     arrToReturn.push([[keys[i]], [values[i]]])
   }
-  console.log('return value from top traks', arrToReturn)
+
   return arrToReturn
 }
 
-export const popularityScore = (arrOfObj) => {
-  const divisor = arrOfObj.lenth
-  const total = arrOfObj.map((elem) => elem.popularity).reduce((acc, cur) => acc + cur)
+export const popularityScore = (arr) => {
+  const divisor = arr.length
+  const total = arr.map((elem) => elem.popularity).reduce((acc, cur) => acc + cur)
   const answer = Math.round(total / divisor)
-  console.log('answer in popularity score', answer)
   return answer
 }
 
-export const postiveExplainations = ['loudness', 'energy level', 'danceability', 'live music', 'instrumental', 'spoken lyrics']
+export const postiveExplainations = ['loudness', 'energy level', 'danceability', 'live music', 'instrumentality', 'spoken lyrics']
 
+export const mostPopularArtist = (arr) => {
+  const artist = arr.reduce((acc, cur) => {
+    if (cur.popularity > acc.popularity) {
+      acc = cur
+    }
+    return acc
+  })
+  console.log('artist in mostPop', artist)
+  return artist
+}
+
+export const leastPopularArtist = (arr) => {
+  const artist = arr.reduce((acc, cur) => {
+    if (cur.popularity < acc.popularity) {
+      acc = cur
+    }
+    return acc
+  })
+  console.log('artist in leastPop', artist)
+  return artist
+}

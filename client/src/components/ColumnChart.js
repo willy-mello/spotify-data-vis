@@ -9,15 +9,13 @@ const Magma = ["#000004", "#010005", "#010106", "#010108", "#020109", "#02020b",
 const colorScheme = Magma.filter((elem, idx) => idx % 3 === true)
 export const ColumnChart = props => {
   const artists = props.artists
-  console.log('props.artists in barchart', props.artists)
   const genres = genreFinder(artists)
-  console.log(genres, 'genres in Charts.js')
   return (
     <div className='chart'>
       <BarChart
         data={genres}
         color={colorScheme}
-
+        title={'favorite genres'}
       />
     </div>
   )

@@ -6,8 +6,9 @@ import { Artists } from './components/Artists'
 import { PieCharts } from './components/PieCharts'
 import { ColumnChart } from './components/ColumnChart'
 import { ProgressDisc } from './components/ProgressDisc'
-import { reduceTopTracksData, stringifyIds } from './utils'
-import { postiveExplainations } from './utils'
+import { ScoreBoard } from './components/ScoreBoard'
+import { reduceTopTracksData, stringifyIds, popularityScore, postiveExplainations } from './utils'
+
 
 const spotifyApi = new SpotifyWebApi()
 
@@ -25,7 +26,8 @@ class App extends Component {
       topArtists: [],
       topTracks: [],
       artistString: '',
-      musicAnalysis: []
+      musicAnalysis: [],
+      popularity: 0
     }
 
   }
@@ -54,12 +56,12 @@ class App extends Component {
 
   getTopArtists() {
     const options = { limit: 50 }
-    console.log('gettopArtists clicked')
     spotifyApi.getMyTopArtists(options)
       .then((response) => {
         console.log('response.items', response.items)
         this.setState({
-          topArtists: response.items
+          topArtists: response.items,
+          popularity: popularityScore(response.items)
         });
       })
   }
@@ -67,14 +69,10 @@ class App extends Component {
     try {
       const options = { limit: 25 }
       const response = await spotifyApi.getMyTopTracks(options)
-
-      console.log('response.items', response.items)
       this.setState({
         topTracks: response.items,
         artistString: stringifyIds(response.items)
-
       });
-
     } catch (error) {
       console.error(error)
     }
@@ -113,20 +111,16 @@ class App extends Component {
           </div>
         } */}
           {this.state.loggedIn &&
-            <div>
 
-              <button onClick={() => this.populateState()}>
-                get top artists
+            <button onClick={() => this.populateState()}>
+              get top artists
               </button>
-            </div>
           }
           {this.state.topArtists.length > 0 &&
-            <div>
 
-              <button onClick={() => this.getTrackAnalysis()}>
-                Data Loaded, Show Me
+            <button onClick={() => this.getTrackAnalysis()}>
+              Data Loaded, Show Me
               </button>
-            </div>
           }
         </div>
         <div className='discBand'>
@@ -136,7 +130,7 @@ class App extends Component {
               return (
                 <div className='disc'>
                   <ProgressDisc quality={elem} />
-                  <span>{postiveExplainations[idx]}</span>
+                  <span key={idx}>{postiveExplainations[idx]}</span>
                 </div>
               )
 
@@ -144,15 +138,21 @@ class App extends Component {
           }
         </div>
         <div className="meatAndPotatoes">
+          {this.state.musicAnalysis.length > 0 &&
+            <div className="fillings">
+              <ScoreBoard popularity={this.state.popularity} />
+              <Artists artists={this.state.topArtists} />
+            </div>
+          }
 
           {this.state.musicAnalysis.length > 0 &&
             <div className="fillings">
-              <PieCharts artists={this.state.topArtists} />
+              <ColumnChart artists={this.state.topArtists} />
             </div>
           }
           {this.state.musicAnalysis.length > 0 &&
             <div className="fillings">
-              <ColumnChart artists={this.state.topArtists} />
+              <PieCharts artists={this.state.topArtists} />
             </div>
           }
         </div>

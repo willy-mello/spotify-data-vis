@@ -8,15 +8,21 @@
   pointer-events: none;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.header {
+  background-color: #9ab7f1;
+  height: 10vh;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  border-radius: 10%;
+  border-width: 5px;
+  border-color: black;
+  width: 95vw;
+
+
 }
 
 .App-link {
@@ -33,9 +39,12 @@ flex-direction: column;
 
 }
 
-.header{
+/* .header{
   display: flex;
-}
+  height: 10vw;
+  width:100vw;
+ 
+} */
 
 .discBand {
   display: flex;
@@ -62,9 +71,31 @@ flex-direction: column;
   flex-direction: column;
   width: 33vw
 }
+.scoreboard{
+  border-color: red;
+  background-color:lightslategray;
+  border-width: 2vh;
+  align-content: space-around; 
+}
+
+.score{
+  text-decoration-color: red;
+  font-size:200%
+}
+
+.popularity{
+  display:flex;
+  flex-direction: row;
+  width: 15vw
+}
+
+.portrait{
+  width:10vw
+}
 
 .footer{
   display: flex;
+  width:100vw
 }
 
 @keyframes App-logo-spin {

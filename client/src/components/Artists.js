@@ -1,18 +1,15 @@
 import React from 'react'
+import { Portrait } from './Portait'
+import { leastPopularArtist, mostPopularArtist } from '../utils'
 
 export const Artists = props => {
-  const artists = props.artists
+  const cool = mostPopularArtist(props.artists)
+  const uncool = leastPopularArtist(props.artists)
   return (
-    <div>
-      <ul>
-        {artists.map(elem => {
-          return (
-            <li>
-              <span>{elem.name}</span>
-            </li>
-          )
-        })}
-      </ul>
+    <div className='popularity'>
+      <Portrait cool={cool} />
+      <Portrait uncool={uncool} />
+
     </div>
   )
 }
