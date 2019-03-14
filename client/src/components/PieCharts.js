@@ -1,5 +1,5 @@
 import React from 'react'
-import ReactChartkick, { LineChart, PieChart } from 'react-chartkick'
+import ReactChartkick, { PieChart } from 'react-chartkick'
 import Chart from 'chart.js'
 import { genreFinder } from '../utils'
 

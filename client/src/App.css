@@ -27,6 +27,45 @@ div, button {
   margin: 10px;
 }
 
+.App {
+display: flex;
+flex-direction: column;
+
+}
+
+.header{
+  display: flex;
+}
+
+.discBand {
+  display: flex;
+  flex-direction: row;
+  width: 100vw
+
+}
+
+.disc{
+  display: flex;
+  height: 16vw;
+  width: 14vw;
+  flex-direction: column;
+  align-items: center
+}
+
+.meatAndPotatoes {
+  display: flex;
+}
+
+.fillings {
+  display:flex;
+  flex-direction: column;
+  width: 33vw
+}
+
+.footer{
+  display: flex;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
