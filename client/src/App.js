@@ -123,6 +123,12 @@ class App extends Component {
               </button>
           }
         </div>
+        {this.state.musicAnalysis.length === 0 &&
+
+          <div className='spaceSaver'>
+            <img src={logo} className="App-logo" alt="logo" />
+          </div>
+        }
         <div className='discBand'>
           {this.state.musicAnalysis.length > 0 &&
             this.state.musicAnalysis.map((elem, idx) => {
@@ -137,25 +143,20 @@ class App extends Component {
             })
           }
         </div>
-        <div className="meatAndPotatoes">
-          {this.state.musicAnalysis.length > 0 &&
+        {this.state.musicAnalysis.length > 0 &&
+          <div className="meatAndPotatoes">
             <div className="fillings">
               <ScoreBoard popularity={this.state.popularity} />
               <Artists artists={this.state.topArtists} />
             </div>
-          }
-
-          {this.state.musicAnalysis.length > 0 &&
             <div className="fillings">
               <ColumnChart artists={this.state.topArtists} />
             </div>
-          }
-          {this.state.musicAnalysis.length > 0 &&
             <div className="fillings">
               <PieCharts artists={this.state.topArtists} />
             </div>
-          }
-        </div>
+          </div>
+        }
 
         <div className="footer">This is the Footer</div>
       </div>
