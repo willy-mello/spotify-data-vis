@@ -7,6 +7,7 @@ import { PieCharts } from './components/PieCharts'
 import { ColumnChart } from './components/ColumnChart'
 import { ProgressDisc } from './components/ProgressDisc'
 import { ScoreBoard } from './components/ScoreBoard'
+import { Summary } from './components/Summary'
 import { reduceTopTracksData, stringifyIds, popularityScore, postiveExplainations } from './utils'
 
 
@@ -27,9 +28,11 @@ class App extends Component {
       topTracks: [],
       artistString: '',
       musicAnalysis: [],
-      popularity: 0
+      popularity: 0,
+      recommendationString: '',
+      recommended: []
     }
-
+    this.getRecommendations = this.getRecommendations.bind(this)
   }
   getHashParams() {
     var hashParams = {};
@@ -58,7 +61,6 @@ class App extends Component {
     const options = { limit: 50 }
     spotifyApi.getMyTopArtists(options)
       .then((response) => {
-        console.log('response.items', response.items)
         this.setState({
           topArtists: response.items,
           popularity: popularityScore(response.items)
@@ -77,6 +79,28 @@ class App extends Component {
       console.error(error)
     }
 
+  }
+  async getFiveTopTracks() {
+    try {
+      const options = { limit: 5 }
+      const response = await spotifyApi.getMyTopTracks(options)
+      this.setState({
+        recommendationString: stringifyIds(response.items)
+      });
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  async getRecommendations() {
+    try {
+      const response = await spotifyApi.getRecommendations(this.state.recommendationString, this.state.recommendationString, this.state.recommendationString)
+      this.setState({
+        recommended: response.items
+      });
+    } catch (error) {
+      console.error(error)
+    }
   }
   getTrackAnalysis() {
     spotifyApi.getAudioFeaturesForTracks(this.state.artistString)
@@ -135,8 +159,7 @@ class App extends Component {
 
               return (
                 <div className='disc'>
-                  <ProgressDisc quality={elem} />
-                  <span key={idx}>{postiveExplainations[idx]}</span>
+                  <ProgressDisc idx={idx} quality={elem} />
                 </div>
               )
 
@@ -153,7 +176,9 @@ class App extends Component {
               <ColumnChart artists={this.state.topArtists} />
             </div>
             <div className="fillings">
-              <PieCharts artists={this.state.topArtists} />
+              {/* <PieCharts artists={this.state.topArtists} /> */}
+
+              <Summary getReccs={this.getRecommendations} recommended={this.state.recommended} />
             </div>
           </div>
         }

@@ -4,6 +4,7 @@
 
 .App {
   text-align: center;
+  font-family: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif"
 }
 
 .App-logo {
@@ -76,15 +77,14 @@ margin:0
   width: 33vw
 }
 .scoreboard{
-  border-color: red;
-  background-color:lightslategray;
+ border-style: solid;
   border-width: 2vh;
   align-content: space-around; 
 }
 
 .score{
-  text-decoration-color: red;
-  font-size:200%
+  margin:0;
+  font-size:800%
 }
 
 .popularity{

@@ -1,26 +1,26 @@
 import React from 'react'
 import ReactChartkick, { PieChart } from 'react-chartkick'
 import Chart from 'chart.js'
-import { genreFinder } from '../utils'
+import { postiveExplainations } from '../utils'
 
 ReactChartkick.addAdapter(Chart)
 
 export const ProgressDisc = props => {
+  const newTitle = postiveExplainations[props.idx]
   const quality = props.quality
   const fillAmount = []
-  console.log(quality, 'quality')
-  if (quality[0][0] === "loudness") {
-    let newVal = Math.round((1 / ((Math.abs(quality[1])) / 1000)) * 10)
-    quality.pop()
-    quality.push(newVal)
-
-  }
-
   const whitespaceVal = 100 - quality[1]
   fillAmount.push(['empty gauge', whitespaceVal])
   fillAmount.push(quality)
-  console.log(fillAmount, 'fillamount')
-
+  if (quality[0][0] === "loudness") {
+    let newVal = Math.round(((Math.abs(quality[1])) / 10))
+    quality.pop()
+    quality.push(100 - newVal)
+    fillAmount.pop()
+    fillAmount.pop()
+    fillAmount.push(['empty gauge', newVal])
+    fillAmount.push(quality)
+  }
 
   return (
 
@@ -29,7 +29,9 @@ export const ProgressDisc = props => {
       donut={true}
       legend={false}
       responsive={true}
+      title={newTitle}
       data={fillAmount}
+      fontsize={10}
 
     />
 
